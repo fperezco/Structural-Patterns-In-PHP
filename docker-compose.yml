@@ -1,0 +1,16 @@
+version: '3'
+services:
+    apache-php:
+        build: .docker/apache-php
+        container_name: apache_php_sp
+        ports:
+          - 80:80
+        volumes:
+          - ./:/var/www/html
+          - .docker/apache-php/vhost.conf:/etc/apache2/sites-available/000-default.conf
+        working_dir: /var/www/html
+        environment:
+          PHP_EXTENSION_XDEBUG: 1
+          PHP_INI_XDEBUG__REMOTE_PORT: 9000
+          PHP_IDE_CONFIG: "serverName=docker_server"
+          XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=on"
